@@ -1,0 +1,32 @@
+{
+  "name": "tomlutzenberger/yii2-responsive-image",
+  "description": "Create thumbnails with custom presets and use them in responsive widgets",
+  "type": "yii2-extension",
+  "keywords": [
+    "yii2",
+    "extension",
+    "thumbnail",
+    "responsive",
+    "image"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tom Lutzenberger",
+      "email": "lutzenbergerthomas@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "yiisoft/yii2": "~2.0.16",
+    "yiisoft/yii2-imagine": "~2.2.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "TomLutzenberger\\ResponsiveImage\\": "src"
+    }
+  }
+}
