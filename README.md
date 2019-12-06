@@ -42,7 +42,39 @@ Once the extension is installed, add the component to your `web.php`:
 
 A preset is like a template for both the thumbnail generator and the picture widget.
 
-TODO: Complete this
+```php
+    'preset-name' => [
+        // Path where the source images are stored
+        // Will be used to bulk-generate via console command
+        // Required
+        'srcPath'         => '@web/img/some_path',
+
+        // Path where the thumbnails should be stored
+        // If not set, component's defaultTargetPath will be used
+        // Optional
+        'targetPath'      => '@web/img/some_path/preset-name',
+
+        // File extension of the thumbnails
+        // If not set, thumbnail will have the same extension as source file
+        // Optional
+        'targetExtension' => 'jpg',
+
+        // Thumbnail width and height in pixels
+        // At least one of them is required
+        'width'           => 480,
+        'height'          => 400,
+
+        // Image quality in percent.
+        // Optional
+        'quality'         => 80,
+
+        // Viewport breakpoints for the Picture widget
+        // Thumbnails gets only displayed whitin this breakpoint (min and/or max)
+        // At least one of them is required
+        'breakpointMin'   => 992,
+        'breakpointMax'   => 1200,
+    ],
+```
 
 ### Using the picture widget
 

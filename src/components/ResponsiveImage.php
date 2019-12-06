@@ -41,14 +41,16 @@ class ResponsiveImage extends Component
     public $defaultQuality = 80;
 
     /**
-     * @var string
+     * @var string The default path to store thumbnails at
+     *
+     * By using curly braces, you can use properties of the preset, e.g.
+     * `@webroot/thumbnails/{width}x{height}x{quality}` which would result in a direcory like `/640x480x80`
      */
     public $defaultTargetPath = '@webroot/thumbnails/{name}';
 
     /**
      * @var array An array of presets
      * @example ```
-     *
      *    'preset-name' => [
      *        'srcPath'         => '@web/img/some_path',
      *        'targetPath'      => '@web/img/some_path/480x400',
@@ -86,9 +88,9 @@ class ResponsiveImage extends Component
      * Get thumbnail for given source file and preset
      * If it does not exist, it will be created.
      *
-     * @param string $file
-     * @param string $presetName
-     * @param bool   $force
+     * @param string $file       Path of the source file
+     * @param string $presetName Name of the preset
+     * @param bool   $force      Force the thumbnail creation
      * @return string
      * @throws \yii\base\ErrorException
      */
