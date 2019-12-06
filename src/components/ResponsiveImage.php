@@ -171,7 +171,7 @@ class ResponsiveImage extends Component
         }
 
         $this->presetModels[$presetName] = $model;
-        $target = $this->getAbsolutePath($model->targetPath);
+        $target = $this->getAbsolutePath($model->targetPath, false);
         if (!file_exists($target)) {
             FileHelper::createDirectory($target);
         }
