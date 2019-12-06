@@ -126,4 +126,14 @@ in the controller map:
             'class' => 'TomLutzenberger\ResponsiveImage\commands\ImageController',
         ],
     ],
-`````
+```
+
+Also, you need to define the aliases `@web` and `@webroot` in the `console.php`:
+
+```php
+    'aliases'             => [
+        // ...
+        '@web'     => '',
+        '@webroot' => getcwd().'/web',
+    ],
+```
