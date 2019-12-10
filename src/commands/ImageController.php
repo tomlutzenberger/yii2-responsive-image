@@ -4,11 +4,12 @@ namespace TomLutzenberger\ResponsiveImage\commands;
 
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use TomLutzenberger\ResponsiveImage\components\ResponsiveImage;
 use Yii;
+use yii\base\ErrorException;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\helpers\FileHelper;
-
 
 /**
  * Class ImageController
@@ -21,15 +22,21 @@ class ImageController extends Controller
 {
 
     /**
+     * @var string[] The supported image file extensions to search for
+     */
+    protected $imgFileExtensions = ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.svg'];
+
+
+    /**
      * Generates thumbnails based on configured presets
      *
      * @param string|null $presetName
      * @return int Exit code
-     * @throws \yii\base\ErrorException
+     * @throws ErrorException
      */
     public function actionGenerate(string $presetName = null): int
     {
-        /** @var \TomLutzenberger\ResponsiveImage\components\ResponsiveImage $ri */
+        /** @var ResponsiveImage $ri */
         $ri = Yii::$app->responsiveImage;
 
         if ($presetName !== null && !array_key_exists($presetName, $ri->getPresets())) {
@@ -53,10 +60,8 @@ class ImageController extends Controller
             $this->stdout(PHP_EOL . PHP_EOL);
         }
 
-
         return ExitCode::OK;
     }
-
 
     /**
      * This command generates thumbnails based on configured presets
@@ -65,7 +70,7 @@ class ImageController extends Controller
      */
     public function actionFlush(): int
     {
-        /** @var \TomLutzenberger\ResponsiveImage\components\ResponsiveImage $ri */
+        /** @var ResponsiveImage $ri */
         $ri = Yii::$app->responsiveImage;
 
         foreach ($ri->getPresets() as $pName => $preset) {
@@ -81,7 +86,6 @@ class ImageController extends Controller
             $this->stdout(PHP_EOL . PHP_EOL);
         }
 
-
         return ExitCode::OK;
     }
 
@@ -94,6 +98,7 @@ class ImageController extends Controller
     protected function getDirFiles(string $path): array
     {
         return FileHelper::findFiles($path, [
+            'only'          => $this->imgFileExtensions,
             'caseSensitive' => false,
             'recursive'     => false,
         ]);
