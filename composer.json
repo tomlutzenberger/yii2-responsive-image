@@ -19,7 +19,8 @@
   "require": {
     "php": ">=7.1.0",
     "yiisoft/yii2": "~2.0.16",
-    "yiisoft/yii2-imagine": "~2.2.0"
+    "yiisoft/yii2-imagine": "~2.2.0",
+    "symfony/console": ">=2.7 <5.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master"
