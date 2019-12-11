@@ -45,14 +45,16 @@ A preset is like a template for both the thumbnail generator and the picture wid
 ```php
     'preset-name' => [
         // Path where the source images are stored
+        // Must be absolute and web-accessible -> @webroot
         // Will be used to bulk-generate via console command
         // Required
-        'srcPath'         => '@web/img/some_path',
+        'srcPath'         => '@webroot/img/some_path',
 
         // Path where the thumbnails should be stored
+        // Must be absolute and web-accessible -> @webroot
         // If not set, component's defaultTargetPath will be used
         // Optional
-        'targetPath'      => '@web/img/some_path/preset-name',
+        'targetPath'      => '@webroot/img/some_path/preset-name',
 
         // File extension of the thumbnails
         // If not set, thumbnail will have the same extension as source file
@@ -64,7 +66,7 @@ A preset is like a template for both the thumbnail generator and the picture wid
         'width'           => 480,
         'height'          => 400,
 
-        // Image quality in percent.
+        // Image quality in percent
         // Optional
         'quality'         => 80,
 
@@ -81,8 +83,7 @@ A preset is like a template for both the thumbnail generator and the picture wid
 Just set the source image and the presets you want to use.
 
 **Important:**
-* Path of the source image must be an alias and web-accessible, so either `@web`
-or `@webroot`
+* Path of the source image must be an alias and web-accessible, so either `@web` or `@webroot`
 * Path of the source image need to match `srcPath` of the preset
 
 ```php
@@ -102,15 +103,11 @@ You may als set `pictureOptions` and `imageOptions` depending on your needs.
 
 ### Using the console command
 
-The console command is intended to generate or flush thumbnails for all or just 
-a single preset. If there are no thumbnails, they will be generated on demand
-(not recommended).
+The console command is intended to generate or flush thumbnails for all or just a single preset. If there are no thumbnails, they will be generated on demand (not recommended).
 
-To use it, you need to add the same config to `console.php` as you did in 
-`web.php`. Therefore it is recommended, that you place your presets into
-`params.php` to keep things clean and consistent.
-Additionally, to be able to call the command, define the controller 
-in the controller map:
+To use it, you need to add the same config to `console.php` as you did in `web.php`. Therefore it is recommended, that you place your presets into `params.php` to keep things clean and consistent.
+
+Additionally, to be able to call the command, define the controller in the controller map:
 
 ```php
     // ...
@@ -128,12 +125,10 @@ in the controller map:
     ],
 ```
 
-Also, you need to define the aliases `@web` and `@webroot` in the `console.php`:
+Also, you need to define the aliases `@web` and `@webroot` in the `yii` file:
 
 ```php
-    'aliases'             => [
-        // ...
-        '@web'     => '',
-        '@webroot' => getcwd().'/web',
-    ],
+    // Put this after the require of the Yii.php
+    Yii::setAlias('@webroot', __DIR__ . '/web');
+    Yii::setAlias('@web', '/');
 ```
