@@ -6,6 +6,7 @@ use TomLutzenberger\ResponsiveImage\models\Preset;
 use Yii;
 use yii\base\Component;
 use yii\base\ErrorException;
+use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\helpers\FileHelper;
@@ -66,7 +67,7 @@ class ResponsiveImage extends Component
     public $presets = [];
 
     /**
-     * @var \TomLutzenberger\ResponsiveImage\models\Preset[] An array of preset models
+     * @var Preset[] An array of preset models
      */
     protected $presetModels = [];
 
@@ -92,7 +93,7 @@ class ResponsiveImage extends Component
      * @param string $presetName Name of the preset
      * @param bool   $force      Force the thumbnail creation
      * @return string
-     * @throws \yii\base\ErrorException
+     * @throws ErrorException
      */
     public function getThumbnail(string $file, string $presetName, bool $force = false): string
     {
@@ -114,14 +115,14 @@ class ResponsiveImage extends Component
             $this->createThumbnail($fileAbsolute, $targetAbsolute, $presetName);
         }
 
-        return $targetFile . ($this->cacheBustingEnabled ? '?v=' . $imgInfo['modified'] : '');
+        return $targetFile . ($this->cacheBustingEnabled && $preset->cacheBusting ? '?v=' . $imgInfo['modified'] : '');
     }
 
     /**
      * Get specific preset model by name
      *
      * @param string $presetName
-     * @return \TomLutzenberger\ResponsiveImage\models\Preset
+     * @return Preset
      */
     public function getPreset(string $presetName): Preset
     {
@@ -136,7 +137,7 @@ class ResponsiveImage extends Component
     /**
      * Get all preset models
      *
-     * @return \TomLutzenberger\ResponsiveImage\models\Preset[]
+     * @return Preset[]
      */
     public function getPresets(): array
     {
@@ -149,10 +150,10 @@ class ResponsiveImage extends Component
      *
      * @param string $presetName
      * @param array  $config
-     * @return \TomLutzenberger\ResponsiveImage\models\Preset
-     * @throws \yii\base\ErrorException
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\base\Exception
+     * @return Preset
+     * @throws ErrorException
+     * @throws InvalidConfigException
+     * @throws Exception
      */
     public function createPreset(string $presetName, array $config): Preset
     {
@@ -202,7 +203,7 @@ class ResponsiveImage extends Component
      *
      * @param string $file
      * @return array
-     * @throws \yii\base\ErrorException
+     * @throws ErrorException
      */
     protected function getImageInfo(string $file): array
     {

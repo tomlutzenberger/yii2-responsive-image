@@ -75,6 +75,10 @@ A preset is like a template for both the thumbnail generator and the picture wid
         // At least one of them is required
         'breakpointMin'   => 992,
         'breakpointMax'   => 1200,
+
+        // Enable/disable cache-busting for a single preset
+        // Optional, defaults to `true`
+        'cacheBusting'    => true,
     ],
 ```
 

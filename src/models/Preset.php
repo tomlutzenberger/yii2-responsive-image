@@ -58,6 +58,11 @@ class Preset extends Model
     public $breakpointMin;
 
     /**
+     * @var boolean
+     */
+    public $cacheBusting = true;
+
+    /**
      * @var string
      */
     protected $targetPath;
@@ -73,8 +78,8 @@ class Preset extends Model
     public function rules()
     {
         return [
-            [['name', 'srcPath', 'targetPath', 'targetExtension', 'width', 'height', 'quality', 'breakpointMax', 'breakpointMin'], 'trim'],
-            [['name', 'srcPath', 'targetPath', 'targetExtension', 'width', 'height', 'quality'], 'default'],
+            [['name', 'srcPath', 'targetPath', 'targetExtension', 'width', 'height', 'quality', 'breakpointMax', 'breakpointMin', 'cacheBusting'], 'trim'],
+            [['name', 'srcPath', 'targetPath', 'targetExtension', 'width', 'height', 'quality', 'cacheBusting'], 'default'],
             [['breakpointMax', 'breakpointMin'], 'default', 'value' => -1],
 
             [['name', 'srcPath'], 'required'],
@@ -93,6 +98,7 @@ class Preset extends Model
 
             [['name', 'srcPath', 'targetPath', 'targetExtension'], 'string'],
             [['width', 'height', 'quality', 'breakpointMax', 'breakpointMin'], 'integer'],
+            [['cacheBusting'], 'boolean'],
         ];
     }
 
