@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * @noinspection PhpUnused
+ * @noinspection UnknownInspectionInspection
+ */
+
 namespace TomLutzenberger\ResponsiveImage\commands;
 
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use TomLutzenberger\ResponsiveImage\components\ResponsiveImage;
 use Yii;
-use yii\base\ErrorException;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\helpers\FileHelper;
@@ -32,11 +36,15 @@ class ImageController extends Controller
      *
      * @param string|null $presetName
      * @return int Exit code
-     * @throws ErrorException
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
+     * @noinspection DisconnectedForeachInstructionInspection
      */
-    public function actionGenerate(string $presetName = null): int
+    public function actionGenerate($presetName = null)
     {
         /** @var ResponsiveImage $ri */
+        /** @noinspection PhpUndefinedFieldInspection */
         $ri = Yii::$app->responsiveImage;
 
         if ($presetName !== null && !array_key_exists($presetName, $ri->getPresets())) {
@@ -47,7 +55,7 @@ class ImageController extends Controller
 
         $presets = $presetName === null ? $ri->getPresets() : [$presetName => $ri->getPreset($presetName)];
 
-        foreach ($presets as $pName => $preset) {
+        foreach ($presets as $preset) {
             $imgFiles = $this->getDirFiles(Yii::getAlias($preset->srcPath));
             $pb = new ProgressBar((new ConsoleOutput()), count($imgFiles));
             $this->stdout("Preset `$preset->name`" . PHP_EOL);
@@ -63,17 +71,23 @@ class ImageController extends Controller
         return ExitCode::OK;
     }
 
+
     /**
      * This command generates thumbnails based on configured presets
      *
      * @return int Exit code
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
+     * @noinspection DisconnectedForeachInstructionInspection
      */
-    public function actionFlush(): int
+    public function actionFlush()
     {
         /** @var ResponsiveImage $ri */
+        /** @noinspection PhpUndefinedFieldInspection */
         $ri = Yii::$app->responsiveImage;
 
-        foreach ($ri->getPresets() as $pName => $preset) {
+        foreach ($ri->getPresets() as $preset) {
             $imgFiles = $this->getDirFiles(Yii::getAlias($preset->targetPath));
             $pb = new ProgressBar((new ConsoleOutput()), count($imgFiles));
             $this->stdout("Flush Preset `$preset->name`" . PHP_EOL);
@@ -95,7 +109,7 @@ class ImageController extends Controller
      * @param string $path
      * @return array
      */
-    protected function getDirFiles(string $path): array
+    protected function getDirFiles($path)
     {
         return FileHelper::findFiles($path, [
             'only'          => $this->imgFileExtensions,

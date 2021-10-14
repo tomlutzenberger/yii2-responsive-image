@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @noinspection PhpUnused
+ * @noinspection UnknownInspectionInspection
+ */
 
 namespace TomLutzenberger\ResponsiveImage\widgets;
 
@@ -40,10 +44,14 @@ class Picture extends Widget
 
     /**
      * {@inheritdoc}
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function run()
     {
         /** @var \TomLutzenberger\ResponsiveImage\components\ResponsiveImage $ri */
+        /** @noinspection PhpUndefinedFieldInspection */
         $ri = Yii::$app->responsiveImage;
         $sources = '';
 
@@ -64,7 +72,9 @@ class Picture extends Widget
             }
 
 
-            if ($thumbnail === null) continue;
+            if ($thumbnail === null) {
+                continue;
+            }
 
             $sources .= Html::tag('source', '', [
                 'srcset' => $thumbnail . ' 1x',

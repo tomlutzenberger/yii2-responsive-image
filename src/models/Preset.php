@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection UnknownInspectionInspection */
 
 namespace TomLutzenberger\ResponsiveImage\models;
 
@@ -106,14 +106,19 @@ class Preset extends Model
      * Getter for $targetPath
      *
      * @return string
+     * @noinspection PhpUnused
      */
-    public function getTargetPath(): string
+    public function getTargetPath()
     {
         if (isset($this->targetPathResolved)) {
             return $this->targetPathResolved;
         }
 
-        $this->targetPathResolved = empty($this->targetPath) ? Yii::$app->responsiveImage->defaultTargetPath : $this->targetPath;
+        /** @var \TomLutzenberger\ResponsiveImage\components\ResponsiveImage $ri */
+        /** @noinspection PhpUndefinedFieldInspection */
+        $ri = Yii::$app->responsiveImage;
+
+        $this->targetPathResolved = empty($this->targetPath) ? $ri->defaultTargetPath : $this->targetPath;
 
         foreach ($this->getAttributes() as $attrName => $attrValue) {
             $this->targetPathResolved = str_replace('{' . $attrName . '}', $attrValue, $this->targetPathResolved);
@@ -126,8 +131,9 @@ class Preset extends Model
      * Setter for $targetPath
      *
      * @param string $targetPath
+     * @noinspection PhpUnused
      */
-    public function setTargetPath(string $targetPath)
+    public function setTargetPath($targetPath)
     {
         $this->targetPath = $targetPath;
     }

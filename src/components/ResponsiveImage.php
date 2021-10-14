@@ -29,7 +29,7 @@ class ResponsiveImage extends Component
     /**
      * @var boolean Whether caching should be enabled or not. Default is 30 days
      */
-    public $cacheDuration = 86400 * 30;
+    public $cacheDuration = 2592000; // 86400 sec * 30 days;
 
     /**
      * @var boolean Whether cache busting should be enabled or not. Default is true
@@ -45,7 +45,7 @@ class ResponsiveImage extends Component
      * @var string The default path to store thumbnails at
      *
      * By using curly braces, you can use properties of the preset, e.g.
-     * `@webroot/thumbnails/{width}x{height}x{quality}` which would result in a direcory like `/640x480x80`
+     * `@webroot/thumbnails/{width}x{height}x{quality}` which would result in a directory like `/640x480x80`
      */
     public $defaultTargetPath = '@webroot/thumbnails/{name}';
 
@@ -73,8 +73,11 @@ class ResponsiveImage extends Component
 
     /**
      * Check if presets have already been set up and do so if not.
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
-    protected function checkPresets(): void
+    protected function checkPresets()
     {
         if (count($this->presetModels) > 0) {
             return;
@@ -85,6 +88,7 @@ class ResponsiveImage extends Component
         }
     }
 
+
     /**
      * Get thumbnail for given source file and preset
      * If it does not exist, it will be created.
@@ -93,9 +97,11 @@ class ResponsiveImage extends Component
      * @param string $presetName Name of the preset
      * @param bool   $force      Force the thumbnail creation
      * @return string
-     * @throws ErrorException
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
-    public function getThumbnail(string $file, string $presetName, bool $force = false): string
+    public function getThumbnail($file, $presetName, $force = false)
     {
         $preset = $this->getPreset($presetName);
 
@@ -118,13 +124,17 @@ class ResponsiveImage extends Component
         return $targetFile . ($this->cacheBustingEnabled && $preset->cacheBusting ? '?v=' . $imgInfo['modified'] : '');
     }
 
+
     /**
      * Get specific preset model by name
      *
      * @param string $presetName
      * @return Preset
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
-    public function getPreset(string $presetName): Preset
+    public function getPreset($presetName)
     {
         $this->checkPresets();
         if (!array_key_exists($presetName, $this->presetModels)) {
@@ -134,12 +144,16 @@ class ResponsiveImage extends Component
         return $this->presetModels[$presetName];
     }
 
+
     /**
      * Get all preset models
      *
      * @return Preset[]
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
-    public function getPresets(): array
+    public function getPresets()
     {
         $this->checkPresets();
         return $this->presetModels;
@@ -155,7 +169,7 @@ class ResponsiveImage extends Component
      * @throws InvalidConfigException
      * @throws Exception
      */
-    public function createPreset(string $presetName, array $config): Preset
+    public function createPreset($presetName, $config)
     {
         if (array_key_exists($presetName, $this->presetModels)) {
             throw new ErrorException("Thumbnail preset `$presetName` already exists and can't be overwritten.");
@@ -182,14 +196,18 @@ class ResponsiveImage extends Component
         return $model;
     }
 
+
     /**
      * Create a new image thumbnail
      *
      * @param string $srcFile
      * @param string $targetFile
      * @param string $presetName
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
-    protected function createThumbnail(string $srcFile, string $targetFile, string $presetName): void
+    protected function createThumbnail($srcFile, $targetFile, $presetName)
     {
         $preset = $this->getPreset($presetName);
         $quality = $preset->quality > 0 ? $preset->quality : $this->defaultQuality;
@@ -205,7 +223,7 @@ class ResponsiveImage extends Component
      * @return array
      * @throws ErrorException
      */
-    protected function getImageInfo(string $file): array
+    protected function getImageInfo($file)
     {
         if (!file_exists($file)) {
             throw new ErrorException("File `$file` does not exist.");
@@ -249,7 +267,7 @@ class ResponsiveImage extends Component
      * @param bool   $useRealPath
      * @return false|string
      */
-    protected function getAbsolutePath(string $path, bool $useRealPath = true)
+    protected function getAbsolutePath($path, $useRealPath = true)
     {
         $abs = FileHelper::normalizePath(Yii::getAlias(str_replace('@web/', '@webroot/', $path)));
         return $useRealPath ? realpath($abs) : $abs;
@@ -261,7 +279,7 @@ class ResponsiveImage extends Component
      * @param string $path
      * @return string
      */
-    protected function getRelativePath(string $path): string
+    protected function getRelativePath($path)
     {
         return FileHelper::normalizePath(Yii::getAlias(str_replace('@webroot/', '@web/', $path)));
     }
