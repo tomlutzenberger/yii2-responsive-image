@@ -1,3 +1,13 @@
+![Yii2 Responsive Image](logo.png)
+
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tomlutzenberger/yii2-responsive-image)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/tomlutzenberger/yii2-responsive-image)
+![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/tomlutzenberger/yii2-responsive-image)
+![Packagist Downloads](https://img.shields.io/packagist/dt/tomlutzenberger/yii2-responsive-image)
+![Lines of code](https://img.shields.io/tokei/lines/github/tomlutzenberger/yii2-responsive-image)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tomlutzenberger_yii2-responsive-image&metric=alert_status)](https://sonarcloud.io/dashboard?id=tomlutzenberger_yii2-responsive-image)
+![Maintenance](https://img.shields.io/maintenance/yes/2021)
+
 # Yii2 Responsive Image
 
 Create thumbnails with custom presets and use them in responsive widgets
@@ -18,7 +28,7 @@ or add
 "tomlutzenberger/yii2-responsive-image": "*"
 ```
 
-to the require section of your `composer.json` file.
+to the required section of your `composer.json` file.
 
 
 ## Usage
@@ -71,7 +81,7 @@ A preset is like a template for both the thumbnail generator and the picture wid
         'quality'         => 80,
 
         // Viewport breakpoints for the Picture widget
-        // Thumbnails gets only displayed whitin this breakpoint (min and/or max)
+        // Thumbnails gets only displayed within this breakpoint (min and/or max)
         // At least one of them is required
         'breakpointMin'   => 992,
         'breakpointMax'   => 1200,
@@ -109,7 +119,7 @@ You may als set `pictureOptions` and `imageOptions` depending on your needs.
 
 The console command is intended to generate or flush thumbnails for all or just a single preset. If there are no thumbnails, they will be generated on demand (not recommended).
 
-To use it, you need to add the same config to `console.php` as you did in `web.php`. Therefore it is recommended, that you place your presets into `params.php` to keep things clean and consistent.
+To use it, you need to add the same config to `console.php` as you did in `web.php`. However, it is recommended that you place your presets into `params.php` to keep things clean and consistent.
 
 Additionally, to be able to call the command, define the controller in the controller map:
 
@@ -132,7 +142,7 @@ Additionally, to be able to call the command, define the controller in the contr
 Also, you need to define the aliases `@web` and `@webroot` in the `yii` file:
 
 ```php
-    // Put this after the require of the Yii.php
+    // Put this after the 'require' of the Yii.php
     Yii::setAlias('@webroot', __DIR__ . '/web');
     Yii::setAlias('@web', '/');
 ```
