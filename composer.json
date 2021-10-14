@@ -17,13 +17,19 @@
     }
   ],
   "require": {
-    "php": ">=7.1.0",
-    "yiisoft/yii2": "~2.0.16",
+    "php": ">=5.4.0",
+    "yiisoft/yii2": ">=2.0.38",
     "yiisoft/yii2-imagine": "~2.2.0",
     "symfony/console": ">=2.7 <5.0"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master"
+    "roave/security-advisories": "dev-latest"
+  },
+  "provide": {
+    "bower-asset/jquery": "*",
+    "bower-asset/inputmask": "*",
+    "bower-asset/punycode": "*",
+    "bower-asset/yii2-pjax": "*"
   },
   "autoload": {
     "psr-4": {
