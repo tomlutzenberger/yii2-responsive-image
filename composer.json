@@ -1,5 +1,5 @@
 {
-  "name": "tomlutzenberger/yii2-responsive-image",
+  "name": "pgrond/yii2-responsive-image",
   "description": "Create thumbnails with custom presets and use them in responsive widgets",
   "type": "yii2-extension",
   "keywords": [
