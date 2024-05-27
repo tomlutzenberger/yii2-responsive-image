@@ -120,7 +120,7 @@ class Preset extends Model
 
         $this->targetPathResolved = empty($this->targetPath) ? $ri->defaultTargetPath : $this->targetPath;
 
-        foreach ($this->getAttributes() as $attrName => $attrValue) {
+        foreach ($this->getAttributes(['targetPath']) as $attrName => $attrValue) {
             $this->targetPathResolved = str_replace('{' . $attrName . '}', $attrValue, $this->targetPathResolved);
         }
 
