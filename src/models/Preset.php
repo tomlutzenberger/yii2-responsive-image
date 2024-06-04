@@ -63,7 +63,7 @@ class Preset extends Model
     public $cacheBusting = true;
 
     /**
-     * @var string
+     * @var array
      */
     public $pixelDensity;
 
@@ -76,6 +76,7 @@ class Preset extends Model
      * @var string
      */
     protected $targetPathResolved;
+
 
     /**
      * @inheritDoc
@@ -101,7 +102,7 @@ class Preset extends Model
                 return $model->breakpointMax === -1;
             }],
 
-            [['name', 'srcPath', 'targetPath', 'targetExtension', 'pixelDensity'], 'string'],
+            [['name', 'srcPath', 'targetPath', 'targetExtension'], 'string'],
             [['width', 'height', 'quality', 'breakpointMax', 'breakpointMin'], 'integer'],
             [['cacheBusting'], 'boolean'],
         ];
