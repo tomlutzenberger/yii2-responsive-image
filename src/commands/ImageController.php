@@ -28,7 +28,7 @@ class ImageController extends Controller
     /**
      * @var string[] The supported image file extensions to search for
      */
-    protected $imgFileExtensions = ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.svg'];
+    protected $imgFileExtensions = ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.svg', '*.webp'];
 
 
     /**
