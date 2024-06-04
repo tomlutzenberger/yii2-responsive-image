@@ -65,17 +65,17 @@ class Preset extends Model
     /**
      * @var string
      */
+    public $pixelDensity;
+
+    /**
+     * @var string
+     */
     protected $targetPath;
 
     /**
      * @var string
      */
     protected $targetPathResolved;
-
-    /**
-     * @var string
-     */
-    protected $pixelDensity;
 
     /**
      * @inheritDoc
