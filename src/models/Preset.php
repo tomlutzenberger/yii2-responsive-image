@@ -73,12 +73,17 @@ class Preset extends Model
     protected $targetPathResolved;
 
     /**
+     * @var string
+     */
+    protected $pixelDensity;
+
+    /**
      * @inheritDoc
      */
     public function rules()
     {
         return [
-            [['name', 'srcPath', 'targetPath', 'targetExtension', 'width', 'height', 'quality', 'breakpointMax', 'breakpointMin', 'cacheBusting'], 'trim'],
+            [['name', 'srcPath', 'targetPath', 'targetExtension', 'width', 'height', 'quality', 'breakpointMax', 'breakpointMin', 'cacheBusting', 'pixelDensity'], 'trim'],
             [['name', 'srcPath', 'targetPath', 'targetExtension', 'width', 'height', 'quality', 'cacheBusting'], 'default'],
             [['breakpointMax', 'breakpointMin'], 'default', 'value' => -1],
 
@@ -96,7 +101,7 @@ class Preset extends Model
                 return $model->breakpointMax === -1;
             }],
 
-            [['name', 'srcPath', 'targetPath', 'targetExtension'], 'string'],
+            [['name', 'srcPath', 'targetPath', 'targetExtension', 'pixelDensity'], 'string'],
             [['width', 'height', 'quality', 'breakpointMax', 'breakpointMin'], 'integer'],
             [['cacheBusting'], 'boolean'],
         ];
