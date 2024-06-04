@@ -76,8 +76,15 @@ class Picture extends Widget
                 continue;
             }
 
+            $srcset = $thumbnail;
+            $thumbUrlParts = explode('.', $thumbnail);
+            if (!empty($preset->pixelDensity)) {
+              foreach($preset->pixelDensity as $pixelDensity) {
+                $srcset .= ', ' . $thumbUrlParts[0] . '-' . $pixelDensity . 'x.' . ($thumbUrlParts[1] ?? '') . ' ' . $pixelDensity . 'x';
+              }
+            }
             $sources .= Html::tag('source', '', [
-                'srcset' => $thumbnail . ' ' . $preset->pixelDensity ?? '1x',
+                'srcset' => $srcset,
                 'media'  => implode(' AND ', $media),
             ]);
         }

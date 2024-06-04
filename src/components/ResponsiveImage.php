@@ -213,7 +213,27 @@ class ResponsiveImage extends Component
         $quality = $preset->quality > 0 ? $preset->quality : $this->defaultQuality;
 
         $i = Image::thumbnail($srcFile, $preset->width, $preset->height);
+        $i->effects()->sharpen();
         $i->save($targetFile, ['quality' => $quality]);
+        if (!empty($preset->pixelDensity)) {
+            $pathInfo = pathinfo($targetFile);
+            foreach($preset->pixelDensity as $pixelDensity) {
+                $width = $preset->width ? $preset->width * $pixelDensity : null;
+                $height = $preset->height ? $preset->height * $pixelDensity : null;
+                $i = Image::thumbnail($srcFile, $width, $height);
+                $i->effects()->sharpen();
+                $i->save(
+                    $pathInfo['dirname']
+                        . '/'
+                        . $pathInfo['filename']
+                        . '-'
+                        . $pixelDensity
+                        . 'x.'
+                        . $pathInfo['extension'],
+                    ['quality' => $quality]
+                );
+            }
+        }
     }
 
     /**
