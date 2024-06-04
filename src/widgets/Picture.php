@@ -77,7 +77,7 @@ class Picture extends Widget
             }
 
             $sources .= Html::tag('source', '', [
-                'srcset' => $thumbnail . ' 1x',
+                'srcset' => $thumbnail . ' ' . $preset->pixelDensity ?? '1x',
                 'media'  => implode(' AND ', $media),
             ]);
         }
