@@ -56,7 +56,7 @@ class ImageController extends Controller
         $presets = $presetName === null ? $ri->getPresets() : [$presetName => $ri->getPreset($presetName)];
 
         foreach ($presets as $preset) {
-            $imgFiles = $this->getDirFiles(Yii::getAlias($preset->srcPath));
+            $imgFiles = $this->getDirFiles($preset->srcPath);
             $pb = new ProgressBar((new ConsoleOutput()), count($imgFiles));
             $this->stdout("Preset `$preset->name`" . PHP_EOL);
 
@@ -88,7 +88,7 @@ class ImageController extends Controller
         $ri = Yii::$app->responsiveImage;
 
         foreach ($ri->getPresets() as $preset) {
-            $imgFiles = $this->getDirFiles(Yii::getAlias($preset->targetPath));
+            $imgFiles = $this->getDirFiles($preset->targetPath);
             $pb = new ProgressBar((new ConsoleOutput()), count($imgFiles));
             $this->stdout("Flush Preset `$preset->name`" . PHP_EOL);
 
@@ -111,7 +111,8 @@ class ImageController extends Controller
      */
     protected function getDirFiles($path)
     {
-        return FileHelper::findFiles($path, [
+        $abs = FileHelper::normalizePath(Yii::getAlias(str_replace('@web/', '@webroot/', $path)));
+        return FileHelper::findFiles($abs, [
             'only'          => $this->imgFileExtensions,
             'caseSensitive' => false,
             'recursive'     => false,
