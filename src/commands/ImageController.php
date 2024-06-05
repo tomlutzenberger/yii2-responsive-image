@@ -60,9 +60,16 @@ class ImageController extends Controller
             $pb = new ProgressBar((new ConsoleOutput()), count($imgFiles));
             $this->stdout("Preset `$preset->name`" . PHP_EOL);
 
+            $counter = 1;
             foreach ($imgFiles as $img) {
                 $ri->getThumbnail($img, $preset->name);
                 $pb->advance();
+                // Manually call garbage collection every x image.
+                // @see https://github.com/ropensci/magick/issues/352
+                if ($counter % 10 === 0) {
+                    \gc_collect_cycles();
+                }
+                $counter++;
             }
 
             $this->stdout(PHP_EOL . PHP_EOL);
