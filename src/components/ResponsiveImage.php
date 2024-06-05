@@ -117,6 +117,11 @@ class ResponsiveImage extends Component
         $targetAbsolute = $this->getAbsolutePath($preset->targetPath . '/' . $targetFileName, false);
         $targetFile = $this->getRelativePath($preset->targetPath . '/' . $targetFileName);
 
+        // Recreate the thumbnail if the image is newer than the thumb.
+        if ($imgInfo['modified'] > \filemtime($targetAbsolute)) {
+            $force = true;
+        }
+
         if ($force || !file_exists($targetAbsolute)) {
             $this->createThumbnail($fileAbsolute, $targetAbsolute, $presetName);
         }
