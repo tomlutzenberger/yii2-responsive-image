@@ -77,10 +77,17 @@ class Picture extends Widget
             }
 
             $srcset = $thumbnail;
-            $thumbUrlParts = explode('.', $thumbnail);
+            $thumbUrlParts = explode('?', $thumbnail);
+            $pathInfo = pathinfo($thumbnail);
             if (!empty($preset->pixelDensity)) {
               foreach($preset->pixelDensity as $pixelDensity) {
-                $srcset .= ', ' . $thumbUrlParts[0] . '-' . $pixelDensity . 'x.' . ($thumbUrlParts[1] ?? '') . ' ' . $pixelDensity . 'x';
+                $thumb = $pathInfo['dirname']
+                    . '/'
+                    . $pathInfo['filename']
+                    . '-' . $pixelDensity
+                    . 'x.'
+                    . $pathInfo['extension'];
+                $srcset .= ', ' . $thumb . ($thumbUrlParts[1] ? '?' . $thumbUrlParts[1] : '') . ' ' . $pixelDensity . 'x';
               }
             }
             $sources .= Html::tag('source', '', [
