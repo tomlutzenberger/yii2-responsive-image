@@ -290,7 +290,7 @@ class ResponsiveImage extends Component
      * @param bool   $useRealPath
      * @return false|string
      */
-    protected function getAbsolutePath($path, $useRealPath = true)
+    public function getAbsolutePath($path, $useRealPath = true)
     {
         $abs = FileHelper::normalizePath(Yii::getAlias(str_replace('@web/', '@webroot/', $path)));
         return $useRealPath ? realpath($abs) : $abs;
@@ -302,7 +302,7 @@ class ResponsiveImage extends Component
      * @param string $path
      * @return string
      */
-    protected function getRelativePath($path)
+    public function getRelativePath($path)
     {
         return FileHelper::normalizePath(Yii::getAlias(str_replace('@webroot/', '@web/', $path)));
     }

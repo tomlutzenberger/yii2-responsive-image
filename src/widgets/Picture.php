@@ -78,7 +78,7 @@ class Picture extends Widget
 
             $srcset = $thumbnail;
             $thumbUrlParts = explode('?', $thumbnail);
-            $pathInfo = pathinfo($thumbnail);
+            $pathInfo = pathinfo(parse_url($thumbnail)['path']);
             if (!empty($preset->pixelDensity)) {
               foreach($preset->pixelDensity as $pixelDensity) {
                 $thumb = $pathInfo['dirname']
@@ -98,7 +98,12 @@ class Picture extends Widget
 
         echo Html::beginTag('picture', $this->pictureOptions);
         echo $sources;
-        echo Html::img(Yii::getAlias($this->image), $this->imageOptions);
+        if ($ri->cacheBustingEnabled && $ri->getAbsolutePath($this->image)) {
+          $url = $this->image . '?v=' . filemtime($ri->getAbsolutePath($this->image));
+        } else {
+            $url = $this->image;
+        }
+        echo Html::img(Yii::getAlias($url), $this->imageOptions);
         echo Html::endTag('picture');
     }
 }
